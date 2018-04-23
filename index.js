@@ -8,7 +8,7 @@ require('./models/Unit')
 require('./models/Type')
 require('./models/Worker')
 
-const port = 8000
+const PORT = process.env.PORT || 3000
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -23,5 +23,5 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 mongoose.connect(db.url)
 
 require('./routes/unitRoutes')(app)
-
-app.listen(port, () => console.log(`Listen port ${port}`))
+console.log(app.locals)
+app.listen(PORT, () => console.log(`Listen port ${PORT}`))

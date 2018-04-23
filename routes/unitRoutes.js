@@ -1,15 +1,20 @@
 const mongoose = require('mongoose')
 const Unit = mongoose.model('Unit')
+const isEmpty = require('lodash').isEmpty
 
 module.exports = app => {
   app.get('/api/unit/get', async (req, res) => {
     const units = await Unit.find({})
-    res.send(units)
+    isEmpty(units) 
+    ? res.status(500).json('Подразделений не найдено') 
+    : res.send(units)
   })
 
   app.get('/api/unit/get/:id', async (req, res) => {
     const units = await Unit.findOne({_id: req.params.id})
-    res.send(units)
+      isEmpty(units) 
+      ? res.status(500).json('Подразделение не найдено') 
+      : res.status(200).send(units)
   })
 
   app.get('/api/unit/searchType/:type', async (req, res) => {
