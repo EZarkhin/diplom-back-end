@@ -14,7 +14,7 @@ module.exports = app => {
   app.get('/api/type/get/:id', async (req, res) => {
     const types = await Type.findOne({_id: req.params.id})
     isEmpty(types) 
-      ? res.status(500).json('Тип не найдено') 
+      ? res.status(500).json('Тип не найден') 
       : res.send(types)
   })
 

@@ -26,5 +26,6 @@ mongoose.connect(db.url)
 require('./routes/unitRoutes')(app)
 require('./routes/userRoutes')(app)
 require('./routes/typeRoutes')(app)
+require('./routes/workerRoutes')(app)
 
 app.listen(PORT, () => console.log(`Listen port ${PORT}`))

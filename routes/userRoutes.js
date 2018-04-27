@@ -41,6 +41,22 @@ module.exports = app => {
       : res.status(500).json({errMessage: 'Пароль неверный'})
     })
   
+  app.get('/api/user', async (req, res) => {
+    const user = await User.find({})
+
+    isEmpty(user) 
+    ? res.status(500).json({errMessage: 'Пользователей не найдено'}) 
+    : res.status(200).json({user})
+  })
+
+  app.get('/api/user/:id', async (req, res) => {
+    const user = await User.findOne({_id: req.params.id})
+
+    isEmpty(user) 
+    ? res.status(500).json({errMessage: 'Пользователь не найден'}) 
+    : res.status(200).json({user})
+  })
+
   app.put('/api/user/:id', async (req, res) => {
     const { username, password, email, type, token } = req.body
     jwt.verify(token, secret, async (err, decoded) => {
