@@ -23,7 +23,8 @@ module.exports = app => {
       user.save((err, data) => {
         if (err) res.status(500).json({errMessage: err})
         else res.status(200).json({
-          user: user,
+          username: user.username,
+          type: user.type,
           token:  jwt.sign({ username }, secret, {expiresIn: '24h'})
         })
       })
@@ -36,7 +37,7 @@ module.exports = app => {
     isEmpty(user) 
       ? res.status(500).json({ errMessage: 'Пользователь с таким именем не найден'})
       : bcrypt.compareSync(password, user.passwordHash) ? jwt.sign({ username }, secret, {expiresIn: '24h'}, (err, token) => {
-        res.status(200).json({user, token})
+        res.status(200).json({ username: user.username, type: user.type, token})
       })
       : res.status(500).json({errMessage: 'Пароль неверный'})
     })

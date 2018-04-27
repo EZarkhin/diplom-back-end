@@ -6,14 +6,14 @@ const jwt = require('jsonwebtoken')
 const secret = require('../config/cryptConfig').secret
 
 module.exports = app => {
-  app.get('/api/unit/get', async (req, res) => {
+  app.get('/api/unit', async (req, res) => {
     const units = await Unit.find({})
     isEmpty(units) 
     ? res.status(500).json({errMessage: 'Подразделений не найдено'}) 
-    : res.send(units)
+    : res.status(200).send(units)
   })
 
-  app.get('/api/unit/get/:id', async (req, res) => {
+  app.get('/api/unit/:id', async (req, res) => {
     const units = await Unit.findOne({_id: req.params.id})
       isEmpty(units) 
       ? res.status(500).json({errMessage: 'Подразделение не найдено'}) 

@@ -4,17 +4,17 @@ const Unit = mongoose.model('Unit')
 const isEmpty = require('lodash').isEmpty
 
 module.exports = app => {
-  app.get('/api/type/get', async (req, res) => {
+  app.get('/api/type', async (req, res) => {
     const types = await Type.find({})
     isEmpty(types) 
-      ? res.status(500).json('Типов не найдено') 
+      ? res.status(500).json({errMessage: 'Тип не найденo'}) 
       : res.send(types)
   })
 
-  app.get('/api/type/get/:id', async (req, res) => {
+  app.get('/api/type/:id', async (req, res) => {
     const types = await Type.findOne({_id: req.params.id})
     isEmpty(types) 
-      ? res.status(500).json('Тип не найден') 
+      ? res.status(500).json({errMessage: 'Тип не найден'}) 
       : res.send(types)
   })
 
@@ -39,7 +39,7 @@ module.exports = app => {
     updatedUnits.save()
     newType.save((err, date) => {
       if (err) console.log(err)
-      else res.send(data)
+      else res.status(200).send(data)
     })
   })
 
@@ -59,7 +59,7 @@ module.exports = app => {
     updatedUnits.save()
     newType.save((err, date) => {
       if (err) console.log(err)
-      else res.send(data)
+      else res.status(200).send(data)
     })
   })
 }

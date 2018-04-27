@@ -5,21 +5,21 @@ const jwt = require('jsonwebtoken')
 const secret = require('../config/cryptConfig').secret
 
 module.exports = app => {
-  app.get('/api/workers/', async (req, res) => {
+  app.get('/api/worker', async (req, res) => {
     const workers = await Worker.find({})
     isEmpty(workers) 
     ? res.status(500).json({errMessage: 'Cотрудников не найдено'}) 
     : res.send(workers)
   })
 
-  app.get('/api/workers/:id', async (req, res) => {
+  app.get('/api/worker/:id', async (req, res) => {
     const worker = await Worker.findOne({_id: req.params.id})
     isEmpty(workers) 
     ? res.status(500).json({errMessage: 'Cотрудник не найден'}) 
     : res.send(workers)
   })
 
-  app.post('/api/workers/', async (req, res) => {
+  app.post('/api/worker/', async (req, res) => {
     const {
       name,
       workIn,
@@ -53,7 +53,7 @@ module.exports = app => {
       }
     })
   })
-  app.put('/api/workers/:id', async (req, res) => {
+  app.put('/api/worker/:id', async (req, res) => {
     const {
       name,
       workIn,
@@ -90,7 +90,7 @@ module.exports = app => {
     })
   })
 
-  app.delete('/api/workers/:id', async (req, res) => {
+  app.delete('/api/worker/:id', async (req, res) => {
     const worker = await Worker.findOneAndRemove({_id: req.params.id})
     worker.save((err, data) => {
       if (err) res.status(500).json({errMessage: 'Внутренняя ошибка сервера'})
